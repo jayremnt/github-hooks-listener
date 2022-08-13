@@ -29,10 +29,10 @@ app.post('/hooks', async function (req, res) {
   let message = '';
   message += `${
     body?.pusher?.name
-  } just pushed on ${body?.repository?.name?.toUpperCase()}!
+  } just pushed on ${body?.repository?.full_name}!
 ➡️ This push includes ${body?.commits?.length} commits.
 🔥 Head commit: ${body?.head_commit?.message}
-➕ ${body?.head_commit?.added.length} files were added.  
+➕ ${body?.head_commit?.added.length} files were added.
 ➖ ${body?.head_commit?.removed.length} files were removed.
 🔧 ${body?.head_commit?.modified.length} files were modified.
 ⏰ At ${body?.head_commit?.timestamp}`;
