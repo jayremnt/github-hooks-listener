@@ -37,7 +37,7 @@ app.post('/hooks', async function (req, res) {
 🔧 ${body?.head_commit?.modified.length} files were modified.
 ⏰ At ${body?.head_commit?.timestamp}`;
 
-  FacebookAPI.mSendMessage(5127623787315615, message, [], true)
+  FacebookAPI.mSendMessage(process.env.DESTINATION_INBOX, message, [], true)
     .then((response) => {
       console.log('response: ', response.data);
     })
