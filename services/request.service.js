@@ -2,7 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 const qs = require('qs');
 
-module.exports = class Request {
+class Request {
   constructor() {}
 
   static send = (options) => {
@@ -29,4 +29,6 @@ module.exports = class Request {
 
     return axios(options);
   };
-};
+}
+
+module.exports = Request;

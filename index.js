@@ -51,13 +51,9 @@ Link: ${body?.deployment_status?.target_url}`);
 
     message !== '' &&
       FacebookAPI.mSendMessage(process.env.DESTINATION_INBOX, message, [], true)
-        .then((response) => {
-          console.log('response: ', response.data);
-        })
-        .catch((error) => {
-          console.log('err: ', error);
-        });
-  } catch (error) {
-    console.log('err: ', error);
+        .then((res) => console.log(res.data))
+        .catch(console.error);
+  } catch (err) {
+    console.error(err);
   }
 });
