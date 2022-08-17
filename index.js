@@ -35,17 +35,17 @@ Link: ${body?.deployment_status?.target_url}`);
       body?.deployment_status &&
         body?.deployment_status?.state === 'failure' &&
         (message += `❌ ${body?.repository?.full_name} failed to deploy!`);
-    } else if (body?.pusher) {
+    } else if (body?.pusher && body?.head_commit) {
       message += `${body.pusher?.name} just pushed on ${
         body?.repository?.full_name
       }!
-➡️ This push includes ${body?.commits?.length} commits.
-🔥 Head commit: ${body?.head_commit?.url} - ${body?.head_commit?.message}
-✖️ ${body?.head_commit?.added.length} files were added.
-➖ ${body?.head_commit?.removed.length} files were removed.
-🛠️ ${body?.head_commit?.modified.length} files were modified.
-⏰ At ${body?.head_commit?.timestamp.split('T')[0]} ${
-        body?.head_commit?.timestamp.split('T')[1].split('.')[0]
+➡️ This push includes ${body?.commits?.length || 0} commits.
+🔥 Head commit: ${body.head_commit?.url} - ${body.head_commit?.message}
+✖️ ${body.head_commit?.added?.length || 0} files were added.
+➖ ${body.head_commit?.removed?.length || 0} files were removed.
+🛠️ ${body.head_commit?.modified?.length || 0} files were modified.
+⏰ At ${body.head_commit?.timestamp?.split('T')[0]} ${
+        body.head_commit?.timestamp?.split('T')[1]?.split('.')[0]
       }`;
     }
 
