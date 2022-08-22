@@ -23,10 +23,9 @@ app.post('/hooks', function (req, res) {
     const body = req.body;
     let message = '';
 
-    if (body?.sender?.login === 'vercel[bot]') {
-      body?.state === 'pending' &&
-        (message += `⌛ Vercel is deploying ${body?.name}...`);
-
+    if (req.headers['x-github-event'] === 'deployment') {
+      message = `${body?.deployment?.creator?.login} is deploying ${body?.repository?.full_name}...`;
+    } else if (req.headers['x-github-event'] === 'deployment_status') {
       body?.deployment_status &&
         body?.deployment_status?.state === 'success' &&
         (message += `✅ ${body?.repository?.full_name} is deployed successfully!
@@ -35,8 +34,8 @@ Link: ${body?.deployment_status?.target_url}`);
       body?.deployment_status &&
         body?.deployment_status?.state === 'failure' &&
         (message += `❌ ${body?.repository?.full_name} failed to deploy!`);
-    } else if (body?.pusher && body?.head_commit) {
-      message += `${body.pusher?.name} just pushed on ${
+    } else if (req.headers['x-github-event'] === 'push') {
+      message += `${body?.pusher?.name} just pushed on ${
         body?.repository?.full_name
       }!
 ➡️ This push includes ${body?.commits?.length || 0} commits.
