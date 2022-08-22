@@ -24,12 +24,12 @@ app.post('/hooks', function (req, res) {
     let message = '';
 
     if (req.headers['x-github-event'] === 'deployment') {
-      message = `${body?.deployment?.creator?.login} is deploying ${body?.repository?.full_name}...`;
+      message = `🔃 ${body?.deployment?.creator?.login} is deploying ${body?.repository?.full_name}...`;
     } else if (req.headers['x-github-event'] === 'deployment_status') {
       body?.deployment_status &&
         body?.deployment_status?.state === 'success' &&
         (message += `✅ ${body?.repository?.full_name} is deployed successfully!
-Link: ${body?.deployment_status?.target_url}`);
+Link: ${body?.deployment_status?.environment_url}`);
 
       body?.deployment_status &&
         body?.deployment_status?.state === 'failure' &&
